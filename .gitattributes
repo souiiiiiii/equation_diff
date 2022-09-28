@@ -1,2 +1,53 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+#include <iostream>
+#include "EquaDiffhpp"
+#include <cmath>
+
+
+//Le constructeur qui initialise les données
+//de l'équation différentielle
+Equation::Equation(double t_0,double t_f,double y_0){
+  t0=t_0;
+  tf=t_f;
+  y0=y_0;
+}
+
+
+//La fonction pour la solution exacte de l'équation différentielle en fonction de t
+double Equation::soluExact(double t) {
+  return ( -1 + sqrt (1+(t*t)) );
+}
+
+
+//La fonction de l'équation différentielle
+double Equation:: fTest(double t,double y1) {
+
+  double u= t/ ( y1 + 1);
+ return u;
+}
+
+//La fonction f(t,y) au temps initiale
+double Equation:: fTestInitiale(){
+  return double ( t0/(y0+1) );
+}
+
+//La fonction pour la solution exacte de l'équation différentielle avec les contions initiales
+double Equation::soluExacteInitiale() {
+  return ( -1 + sqrt( 1 + (t0*t0) ));
+}
+
+
+//La fonction membre qui vérifie si le temps est dans [0,10]
+double Equation::finished(double t){
+
+  double tDepasse=1;
+  double tValable=2;
+  if( t0 <=t && t <= tf){
+    std::cout << "Le temps est compris dans " << "[" << t0 << "," << tf << "]" << std::endl;
+    return tDepasse;
+  }
+  else{
+    std::cout << "Le temps n'est pas compris dans " << "[" << t0 << "," << tf << "]" << std::endl;
+    return tValable;
+  }
+}
+
